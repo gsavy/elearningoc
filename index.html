@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Streaming</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video-js.min.css" rel="stylesheet" />
+    <title>Video Streaming with Plyr.js</title>
+    <!-- Plyr.js Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/plyr@3.6.6/dist/plyr.css" rel="stylesheet" />
 </head>
 <body>
-    <video id="my-video" class="video-js vjs-default-skin" controls>
-        <source src="https://manifest.prod.boltdns.net/manifest/v1/hls/v4/clear/2985902027001/104c2a69-037f-4588-b7a2-873c91c54574/cc28e118-6b9c-4610-a035-c60614c8c084/6s/rendition.m3u8?fastly_token=NjdhNGQyMjlfODU0NTFiNTIwNWRkNjQ0NGJjOTg0N2EwNjI1ZDNiNTFmNzQ2Mzk3NmU1NjU5ZWYzNGE5NjM0MDRiYjNhODEzOQ%3D%3D">
+    <h1>Ma vidéo en streaming</h1>
+
+    <!-- Video Player -->
+    <video id="player" controls>
+        <source src="https://manifest.prod.boltdns.net/manifest/v1/hls/v4/clear/2985902027001/104c2a69-037f-4588-b7a2-873c91c54574/cc28e118-6b9c-4610-a035-c60614c8c084/6s/rendition.m3u8?fastly_token=NjdhNGQyMjlfODU0NTFiNTIwNWRkNjQ0NGJjOTg0N2EwNjI1ZDNiNTFmNzQ2Mzk3NmU1NjU5ZWYzNGE5NjM0MDRiYjNhODEzOQ%3D%3D" type="application/x-mpegURL">
     </video>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
+
+    <!-- Plyr.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.6/dist/plyr.polyfilled.js"></script>
+
+    <script>
+        // Initialisation de Plyr.js
+        const player = new Plyr('#player', {
+            // Options supplémentaires pour personnaliser le lecteur
+            autoplay: true, // Autoplay la vidéo
+            controls: ['play', 'pause', 'rewind', 'fast-forward', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'] // Contrôles personnalisés
+        });
+    </script>
 </body>
 </html>
