@@ -3,38 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Streaming</title>
-    <!-- Video.js Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video-js.min.css" rel="stylesheet" />
-    <!-- HLS.js -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.19/dist/hls.min.js"></script>
+    <title>Video Streaming with Plyr.js</title>
+    <!-- Plyr.js Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/plyr@3.6.6/dist/plyr.css" rel="stylesheet" />
 </head>
 <body>
     <h1>Ma vidéo en streaming</h1>
-    <!-- Video.js Player -->
-    <video id="my-video" class="video-js vjs-default-skin" controls>
+
+    <!-- Video Player -->
+    <video id="player" controls>
         <source src="https://manifest.prod.boltdns.net/manifest/v1/hls/v4/clear/2985902027001/104c2a69-037f-4588-b7a2-873c91c54574/cc28e118-6b9c-4610-a035-c60614c8c084/6s/rendition.m3u8?fastly_token=NjdhNGQyMjlfODU0NTFiNTIwNWRkNjQ0NGJjOTg0N2EwNjI1ZDNiNTFmNzQ2Mzk3NmU1NjU5ZWYzNGE5NjM0MDRiYjNhODEzOQ%3D%3D" type="application/x-mpegURL">
     </video>
 
-    <!-- Video.js Script -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
+    <!-- Plyr.js Script -->
+    <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.6/dist/plyr.polyfilled.js"></script>
 
     <script>
-        // Initialize Video.js player
-        var player = videojs('my-video');
-
-        // Check if HLS.js is supported
-        if (Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource('https://manifest.prod.boltdns.net/manifest/v1/hls/v4/clear/2985902027001/104c2a69-037f-4588-b7a2-873c91c54574/cc28e118-6b9c-4610-a035-c60614c8c084/6s/rendition.m3u8?fastly_token=NjdhNGQyMjlfODU0NTFiNTIwNWRkNjQ0NGJjOTg0N2EwNjI1ZDNiNTFmNzQ2Mzk3NmU1NjU5ZWYzNGE5NjM0MDRiYjNhODEzOQ%3D%3D');
-            hls.attachMedia(player.tech().el());
-            hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                player.play();
-            });
-        } else if (player.isHTML5) {
-            // Fallback if HLS.js is not supported
-            player.src({ type: "application/x-mpegURL", src: 'https://manifest.prod.boltdns.net/manifest/v1/hls/v4/clear/2985902027001/104c2a69-037f-4588-b7a2-873c91c54574/cc28e118-6b9c-4610-a035-c60614c8c084/6s/rendition.m3u8?fastly_token=NjdhNGQyMjlfODU0NTFiNTIwNWRkNjQ0NGJjOTg0N2EwNjI1ZDNiNTFmNzQ2Mzk3NmU1NjU5ZWYzNGE5NjM0MDRiYjNhODEzOQ%3D%3D' });
-        }
+        // Initialisation de Plyr.js
+        const player = new Plyr('#player', {
+            // Options supplémentaires pour personnaliser le lecteur
+            autoplay: true, // Autoplay la vidéo
+            controls: ['play', 'pause', 'rewind', 'fast-forward', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'] // Contrôles personnalisés
+        });
     </script>
 </body>
 </html>
