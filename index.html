@@ -1,30 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Streaming with Plyr.js</title>
-    <!-- Plyr.js Stylesheet -->
-    <link href="https://cdn.jsdelivr.net/npm/plyr@3.6.6/dist/plyr.css" rel="stylesheet" />
+    <title>Lecture vidéo avec HLS.js</title>
 </head>
 <body>
-    <h1>Ma vidéo en streaming</h1>
-
-    <!-- Video Player -->
-    <video id="player" controls>
-        <source src="https://manifest.prod.boltdns.net/manifest/v1/hls/v4/clear/2985902027001/104c2a69-037f-4588-b7a2-873c91c54574/cc28e118-6b9c-4610-a035-c60614c8c084/6s/rendition.m3u8?fastly_token=NjdhNGQyMjlfODU0NTFiNTIwNWRkNjQ0NGJjOTg0N2EwNjI1ZDNiNTFmNzQ2Mzk3NmU1NjU5ZWYzNGE5NjM0MDRiYjNhODEzOQ%3D%3D" type="application/x-mpegURL">
+    <h1>Vidéo en Streaming avec HLS.js</h1>
+    
+    <!-- Élément vidéo pour afficher la vidéo -->
+    <video id="video" width="100%" controls>
+        <!-- Le flux HLS sera chargé dynamiquement avec HLS.js -->
     </video>
 
-    <!-- Plyr.js Script -->
-    <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.6/dist/plyr.polyfilled.js"></script>
+    <!-- Charger HLS.js depuis un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.19/dist/hls.min.js"></script>
 
     <script>
-        // Initialisation de Plyr.js
-        const player = new Plyr('#player', {
-            // Options supplémentaires pour personnaliser le lecteur
-            autoplay: true, // Autoplay la vidéo
-            controls: ['play', 'pause', 'rewind', 'fast-forward', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'] // Contrôles personnalisés
-        });
+        // Vérifie si HLS.js est supporté par le navigateur
+        if (Hls.isSupported()) {
+            // Récupère l'élément vidéo
+            var video = document.getElementById('video');
+            
+            // Crée une nouvelle instance de HLS.js
+            var hls = new Hls();
+            
+            // Charge l'URL de ton flux vidéo HLS (ton fichier .m3u8)
+            hls.loadSource('https://manifest.prod.boltdns.net/manifest/v1/hls/v4/clear/2985902027001/104c2a69-037f-4588-b7a2-873c91c54574/cc28e118-6b9c-4610-a035-c60614c8c084/6s/rendition.m3u8?fastly_token=NjdhNGQyMjlfODU0NTFiNTIwNWRkNjQ0NGJjOTg0N2EwNjI1ZDNiNTFmNzQ2Mzk3NmU1NjU5ZWYzNGE5NjM0MDRiYjNhODEzOQ%3D%3D');
+
+            // Attache HLS.js à l'élément vidéo
+            hls.attachMedia(video);
+
+            // Lorsque le manifeste est chargé, démarre la lecture
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        } else {
+            // Si HLS.js n'est pas supporté, affiche un message d'erreur
+            console.error("Le navigateur ne supporte pas HLS.js.");
+        }
     </script>
 </body>
 </html>
